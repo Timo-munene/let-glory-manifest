@@ -1,0 +1,21 @@
+@media (max-width: 768px) {
+  .hero, .hero-image, .page-hero {
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+    height: 100vh !important;
+    overflow: hidden !important;
+    background: #000 !important;
+    position: relative !important;
+    display: block !important;
+  }
+  .hero img, .hero-image img, .page-hero img {
+    width: 90% !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    display: block !important;
+    margin: 0 auto !important;
+    position: relative !important;
+  }
+}

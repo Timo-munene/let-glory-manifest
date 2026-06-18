@@ -1,0 +1,46 @@
+@media (min-width: 769px) {
+  #root section.min-h-screen > div.absolute.inset-0 {
+    transform: translateY(14%) !important;
+  }
+
+  #root section.min-h-screen > div.absolute.inset-0 > img {
+    object-position: center 82% !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero, .hero-image, .page-hero {
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+    height: 100vh !important;
+    overflow: hidden !important;
+    background: #000 !important;
+    position: relative !important;
+    display: block !important;
+  }
+
+  .hero img, .hero-image img, .page-hero img {
+    width: 90% !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    display: block !important;
+    margin: 0 auto !important;
+    position: relative !important;
+  }
+}
+
+footer[data-site-footer="true"] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+}
+
+footer[data-site-footer="true"] .tkm-copyright-logo {
+  height: 0.95em;
+  width: auto;
+  vertical-align: middle;
+  display: inline-block;
+}

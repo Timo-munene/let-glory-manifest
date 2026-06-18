@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Let Glory Manifest</title>
+    <link rel="stylesheet" crossorigin href="Let Glory Manifest/assets/index-CHZslubi.css">
+    <link rel="stylesheet" href="Let Glory Manifest/site-overrides.css?v=3">
+</head>
+<body>
+    <div id="root"></div>
+    <script type="module" crossorigin src="Let Glory Manifest/assets/index-B9S4yvVQ.js"></script>
+    <script>
+        (function() {
+            var logoPath = 'Let Glory Manifest/assets/tkm-copyright.svg';
+            function removeMatchingText() {
+                var badPattern = /Made with|for Micah & Damaris|Lovable|Loveable|lovable\.dev|lovable\.app|Timothy|Timithy|Kirathimo|httrack|ht track|trackevents|__l5e|_flock|mirror site|website mirror|Dev Assistant|AI Assistant|Powered by/i;
+                document.querySelectorAll('footer, [role="contentinfo"]').forEach(function(node) {
+                    if (badPattern.test(node.textContent || '')) { node.remove(); }
+                });
+                document.querySelectorAll('button, a, [role="tab"], [data-value="ai"]').forEach(function(node) {
+                    if (badPattern.test(node.textContent || '')) { node.remove(); }
+                });
+            }
+            function ensureFooter() {
+                var footer = document.querySelector('footer[data-site-footer="true"]');
+                if (!footer) {
+                    footer = document.createElement('footer');
+                    footer.setAttribute('data-site-footer', 'true');
+                    footer.style.cssText = 'text-align:center;padding:16px 12px 24px;font-size:0.9rem;color:#7c6b68;letter-spacing:0.08em;';
+                    document.body.appendChild(footer);
+                }
+                footer.innerHTML = '<span>All rights reserved &copy; TKM</span><span>2026</span>';
+            }
+            window.addEventListener('load', function() { setTimeout(function() { removeMatchingText(); ensureFooter(); }, 200); });
+            window.addEventListener('DOMContentLoaded', function() { setTimeout(function() { removeMatchingText(); ensureFooter(); }, 200); });
+            setTimeout(function() { removeMatchingText(); ensureFooter(); }, 1500);
+        })();
+    </script>
+    <script>
+        (function() {
+            function normalizeUrl(url) {
+                if (!url) return url;
+                if (/^\/(?:assets|__l5e)\//i.test(url)) {
+                    var path = window.location.pathname.replace(/\\/g, '/');
+                    if (path.indexOf('/Let Glory Manifest/') !== -1) {
+                        return url.replace(/^\//, '');
+                    }
+                    return 'Let Glory Manifest' + url;
+                }
+                return url;
+            }
+            function rewriteAssetUrls() {
+                document.querySelectorAll('[src],[href],[poster],[srcset]').forEach(function(node) {
+                    if (node.hasAttribute('src')) {
+                        var src = node.getAttribute('src');
+                        if (/^\/(?:assets|__l5e)\//i.test(src)) { node.setAttribute('src', normalizeUrl(src)); }
+                    }
+                    if (node.hasAttribute('href')) {
+                        var href = node.getAttribute('href');
+                        if (/^\/(?:assets|__l5e)\//i.test(href)) { node.setAttribute('href', normalizeUrl(href)); }
+                    }
+                });
+            }
+            rewriteAssetUrls();
+            new MutationObserver(rewriteAssetUrls).observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['src', 'href'] });
+            var lastSrc = null;
+            function getImgSrc(img) { return img.currentSrc || img.src || ''; }
+            function applyMobileHeroStyles() {
+                if (window.innerWidth > 768) return;
+                var root = document.getElementById('root');
+                if (!root) return;
+                var hero = root.querySelector('.hero, .hero-image, .page-hero');
+                if (!hero) return;
+                var img = hero.querySelector('img');
+                if (!img) return;
+                var src = getImgSrc(img);
+                if (lastSrc === src) return;
+                lastSrc = src;
+                hero.style.setProperty('height', '100vh', 'important');
+                hero.style.setProperty('min-height', '100vh', 'important');
+                hero.style.setProperty('max-height', '100vh', 'important');
+                hero.style.setProperty('overflow', 'hidden', 'important');
+                hero.style.setProperty('background', '#000', 'important');
+                img.style.setProperty('width', '100%', 'important');
+                img.style.setProperty('height', '100vh', 'important');
+                img.style.setProperty('max-height', '100vh', 'important');
+                img.style.setProperty('object-fit', 'contain', 'important');
+                img.style.setProperty('object-position', 'center', 'important');
+                img.style.setProperty('display', 'block', 'important');
+                img.style.setProperty('margin', '0 auto', 'important');
+            }
+            function applyDesktopHeroStyles() {
+                if (window.innerWidth <= 768) return;
+                var root = document.getElementById('root');
+                if (!root) return;
+                var section = root.querySelector('section.min-h-screen');
+                var layer = section && section.querySelector(':scope > div.absolute.inset-0');
+                var img = layer && layer.querySelector('img');
+                if (!layer || !img) return;
+                layer.style.setProperty('height', '100vh', 'important');
+                layer.style.setProperty('max-height', '100vh', 'important');
+                layer.style.setProperty('overflow', 'hidden', 'important');
+                img.style.setProperty('width', '100%', 'important');
+                img.style.setProperty('height', '100vh', 'important');
+                img.style.setProperty('max-height', '100vh', 'important');
+                var desktopSrc = 'assets/lgm.png';
+                if (String(img.src || '').indexOf('lgm.png') === -1) {
+                    img.src = desktopSrc;
+                }
+                img.setAttribute('src', desktopSrc);
+                img.style.setProperty('display', 'block', 'important');
+                img.style.setProperty('position', 'relative', 'important');
+            }
+            function applyHeroStyles() { applyMobileHeroStyles(); applyDesktopHeroStyles(); }
+            [100, 300, 600, 1000, 1500, 2000].forEach(function(delay) { setTimeout(applyHeroStyles, delay); });
+            new MutationObserver(function() { applyHeroStyles(); }).observe(document.documentElement, { childList: true, subtree: true });
+            window.addEventListener('resize', applyHeroStyles);
+            window.addEventListener('load', applyHeroStyles);
+        })();
+    </script>
+</body>
+</html>
