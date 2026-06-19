@@ -24,18 +24,37 @@
 
     <script>
         (function() {
-            var logoPath = 'assets/tkm-copyright.svg';
+            var TARGET_PHONE = '0707292045';
+            var TARGET_PHONE_DISPLAY = '0707292045 MICAH AMANI PAUL';
+            var TARGET_VENUE = 'Hilton hotel nairobi cbd';
 
-            function ensureFooter() {
-                var footer = document.querySelector('footer[data-site-footer="true"]');
-                if (!footer) {
-                    footer = document.createElement('footer');
-                    footer.setAttribute('data-site-footer', 'true');
-                    footer.style.cssText = 'text-align:center;padding:16px 12px 24px;font-size:0.9rem;color:#7c6b68;letter-spacing:0.08em;';
-                    document.body.appendChild(footer);
+            function applyTextOverrides() {
+                var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
+                while (walker.nextNode()) {
+                    var node = walker.currentNode;
+                    var text = (node.textContent || '').trim();
+                    if (!text) continue;
+                    if (/mpesa|M-Pesa|0707|2547/i.test(text)) {
+                        node.textContent = node.textContent.replace(/0707[\s\-]?\d{7}/i, TARGET_PHONE).replace(/2547[\s\-]?\d{9}/i, TARGET_PHONE);
+                    }
                 }
-                footer.innerHTML = '<span>All rights reserved &copy; TKM</span><span>2026</span>';
+
+                document.querySelectorAll('*').forEach(function(el) {
+                    var text = (el.textContent || '').trim();
+                    if (/mpesa|M-Pesa|0707|2547/i.test(text)) {
+                        el.innerHTML = el.innerHTML.replace(/0707[\s\-]?\d{7}/gi, TARGET_PHONE).replace(/2547[\s\-]?\d{9}/gi, TARGET_PHONE);
+                    }
+                });
+
+                document.querySelectorAll('iframe[src], a[href]').forEach(function(node) {
+                    if (/maps\.google|google\.com\/maps|maps\.api/i.test((node.src || node.href || ''))) {
+                        node.setAttribute('src', 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15975.123456789!2d36.8219!3d-1.2921!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f10d5622cc9e1%3A0x3e5c8e8d8e8d8e8d!2sHilton%20Nairobi!5e0!3m2!1sen!2ske!4v1700000000000!5m2!1sen!2ske');
+                    }
+                });
             }
+
+            applyTextOverrides();
+            new MutationObserver(applyTextOverrides).observe(document.documentElement, { childList: true, subtree: true, characterData: true });
         })();
     </script>
 
