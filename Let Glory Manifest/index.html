@@ -26,33 +26,6 @@
         (function() {
             var logoPath = 'assets/tkm-copyright.svg';
 
-            function removeMatchingText() {
-                var badPattern = /Made with|for Micah & Damaris|Lovable|Loveable|lovable\.dev|lovable\.app|Timothy|Timithy|Kirathimo|httrack|ht track|trackevents|__l5e|_flock|mirror site|website mirror|Dev Assistant|AI Assistant|Powered by/i;
-
-                document.querySelectorAll('footer, [role="contentinfo"]').forEach(function(node) {
-                    if (badPattern.test(node.textContent || '')) {
-                        node.remove();
-                    }
-                });
-
-                document.querySelectorAll('button, a, [role="tab"], [data-value="ai"]').forEach(function(node) {
-                    if (badPattern.test(node.textContent || '')) {
-                        node.remove();
-                    }
-                });
-
-                var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
-                while (walker.nextNode()) {
-                    var node = walker.currentNode;
-                    if (!node.parentNode || /^(SCRIPT|STYLE)$/i.test(node.parentNode.tagName)) {
-                        continue;
-                    }
-                    if (badPattern.test(node.textContent || '')) {
-                        node.parentNode.removeChild(node);
-                    }
-                }
-            }
-
             function ensureFooter() {
                 var footer = document.querySelector('footer[data-site-footer="true"]');
                 if (!footer) {
@@ -61,26 +34,8 @@
                     footer.style.cssText = 'text-align:center;padding:16px 12px 24px;font-size:0.9rem;color:#7c6b68;letter-spacing:0.08em;';
                     document.body.appendChild(footer);
                 }
-
-                footer.innerHTML = '<span>All rights reserved TKM</span><img class="tkm-copyright-logo" src="' + logoPath + '" alt="Copyright" /><span>2026</span>';
+                footer.innerHTML = '<span>All rights reserved &copy; TKM</span><span>2026</span>';
             }
-
-            window.addEventListener('load', function() {
-                setTimeout(function() {
-                    removeMatchingText();
-                    ensureFooter();
-                }, 200);
-            });
-            window.addEventListener('DOMContentLoaded', function() {
-                setTimeout(function() {
-                    removeMatchingText();
-                    ensureFooter();
-                }, 200);
-            });
-            setTimeout(function() {
-                removeMatchingText();
-                ensureFooter();
-            }, 1500);
         })();
     </script>
 
